@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Ben Café - Menu Complet</title>
+    <title>Big Ben Café - Menu Digital</title>
     <style>
-        /* Reset et Polices */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
         
         :root {
-            --gold: #C0A062;
-            --dark-brown: #3A2E1E;
-            --cream: #F5F1E8;
-            --red: #A51C30;
+            --primary-gold: #C9A96E;
+            --dark-gold: #B8941F;
+            --deep-navy: #1B2951;
+            --charcoal: #2A2A2A;
+            --warm-white: #FEFCF8;
+            --cream: #F8F6F0;
+            --accent-burgundy: #8B2635;
+            --text-dark: #2C2C2C;
+            --text-muted: #6B7280;
+            --border-light: #E5E7EB;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.12);
+            --shadow-dark: rgba(0, 0, 0, 0.25);
+            --gradient-gold: linear-gradient(135deg, #C9A96E, #B8941F);
+            --gradient-navy: linear-gradient(135deg, #1B2951, #0F1A3A);
         }
         
         * {
@@ -22,1470 +32,1005 @@
         }
         
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--cream);
-            color: var(--dark-brown);
-            line-height: 1.7;
-            background-image: url('https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--warm-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        .overlay {
-            background-color: rgba(245, 241, 232, 0.93);
-            min-height: 100vh;
-            padding: 3rem;
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(254, 252, 248, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 2px 20px var(--shadow-light);
         }
         
-        /* En-tête */
-        header {
-            text-align: center;
-            margin-bottom: 4rem;
-            padding-bottom: 2rem;
-            border-bottom: 3px solid var(--gold);
-            position: relative;
+        .nav-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
         
-        h1 {
-            font-family: 'Cinzel', serif;
-            color: var(--dark-brown);
-            font-size: 4rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-        
-        .subtitle {
-            font-style: italic;
-            color: var(--red);
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-        }
-        
-        .big-ben-icon {
-            width: 80px;
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             height: 80px;
-            margin: 0 auto;
-            display: block;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23C0A062"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M13 7h-2v6h6v-2h-4z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-top: 1rem;
         }
         
-        /* Sections du menu */
-        .menu-container {
-            max-width: 1200px;
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            color: var(--deep-navy);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: translateY(-1px);
+        }
+        
+        .logo::before {
+            content: "🕰️";
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 4px var(--shadow-light));
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background: var(--cream);
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .nav-menu a:hover {
+            background: var(--gradient-gold);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-navy);
+            color: white;
+            text-align: center;
+            padding: 120px 2rem 80px;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="%23C9A96E" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="%23C9A96E" opacity="0.08"/><circle cx="50" cy="10" r="0.3" fill="%23C9A96E" opacity="0.12"/><circle cx="90" cy="40" r="0.4" fill="%23C9A96E" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.4;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
             margin: 0 auto;
+        }
+        
+        .hero-clock {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: clockPulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+        
+        @keyframes clockPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.95; }
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 2rem;
+        }
+        
+        .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 80px;
         }
         
         .menu-section {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid var(--gold);
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px var(--shadow-light), 0 10px 15px var(--shadow-light);
+            border: 1px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
         
         .menu-section::before {
-            content: "";
+            content: '';
             position: absolute;
             top: 0;
             right: 0;
-            width: 60px;
-            height: 60px;
-            background-color: var(--gold);
-            opacity: 0.1;
-            border-radius: 0 0 0 100%;
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-gold);
+            border-radius: 0 24px 0 100%;
+            opacity: 0.08;
+        }
+        
+        .menu-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px var(--shadow-light), 0 25px 50px var(--shadow-medium);
         }
         
         .section-title {
-            font-family: 'Cinzel', serif;
-            color: var(--dark-brown);
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 2px solid var(--gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--deep-navy);
+            margin-bottom: 2rem;
             position: relative;
-            letter-spacing: 1px;
+            padding-bottom: 1rem;
+            letter-spacing: -0.025em;
         }
         
         .section-title::after {
-            content: "";
+            content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
-            width: 30%;
-            height: 2px;
-            background-color: var(--red);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--accent-burgundy);
+            font-size: 1.125rem;
+            margin: 2.5rem 0 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--primary-gold);
+            letter-spacing: -0.025em;
         }
         
         .menu-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(192, 160, 98, 0.2);
+            align-items: flex-start;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border-light);
             transition: all 0.3s ease;
+            position: relative;
         }
         
         .menu-item:hover {
-            transform: translateX(5px);
+            background: rgba(201, 169, 110, 0.04);
+            margin: 0 -1.25rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-info {
+            flex: 1;
+            padding-right: 1.5rem;
         }
         
         .item-name {
             font-weight: 600;
-            flex: 2;
-            position: relative;
-            padding-left: 1.2rem;
-        }
-        
-        .item-name::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--gold);
-            font-weight: bold;
-        }
-        
-        .item-price {
-            color: var(--red);
-            font-weight: bold;
-            flex: 1;
-            text-align: right;
-            font-family: 'Cinzel', serif;
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
         }
         
         .item-description {
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.875rem;
+            color: var(--text-muted);
             font-style: italic;
-            margin-top: 0.3rem;
-            grid-column: 1 / -1;
-            padding-left: 1.2rem;
+            line-height: 1.4;
         }
         
-        .special-item {
-            background-color: rgba(192, 160, 98, 0.05);
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1rem 0;
-            border: 1px dashed var(--gold);
-        }
-        
-        .special-item .item-name {
-            color: var(--dark-brown);
+        .item-price {
+            font-family: 'Playfair Display', serif;
             font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--accent-burgundy);
+            white-space: nowrap;
+            background: var(--cream);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 4px var(--shadow-light);
+            transition: all 0.3s ease;
         }
         
-        .special-item .item-name::before {
-            content: "★";
-            color: var(--red);
+        .menu-item:hover .item-price {
+            background: var(--gradient-gold);
+            color: white;
+            border-color: transparent;
         }
         
-        /* Pied de page */
-        footer {
-            text-align: center;
-            margin-top: 5rem;
-            padding: 2rem;
-            color: var(--dark-brown);
-            border-top: 3px solid var(--gold);
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-        
-        .footer-icon {
-            color: var(--gold);
-            font-size: 1.2rem;
-            margin: 0 0.3rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.8rem;
-            }
-            
-            .menu-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .overlay {
-                padding: 1.5rem;
-            }
-        }
-        
-        /* Effets de séparation */
+        /* Section Divider */
         .section-divider {
             text-align: center;
-            margin: 3rem 0;
+            margin: 80px 0;
             position: relative;
         }
         
         .section-divider::before,
         .section-divider::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 50%;
-            width: 30%;
-            height: 1px;
-            background-color: var(--gold);
+            width: 40%;
+            height: 2px;
+            background: var(--gradient-gold);
+            border-radius: 1px;
         }
         
-        .section-divider::before {
-            left: 0;
-        }
-        
-        .section-divider::after {
-            right: 0;
-        }
+        .section-divider::before { left: 0; }
+        .section-divider::after { right: 0; }
         
         .divider-icon {
-            color: var(--gold);
-            font-size: 1.5rem;
-            position: relative;
-            top: 3px;
-            margin: 0 1rem;
+            background: white;
+            padding: 0 2rem;
+            font-size: 2rem;
+            border: 2px solid var(--primary-gold);
+            border-radius: 50px;
+            display: inline-block;
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
         
-        .section-subtitle {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            color: var(--dark-brown);
-            font-size: 1.1rem;
-            margin: 1rem 0 0.5rem;
-            padding-left: 0.5rem;
-            border-left: 3px solid var(--gold);
+        /* Footer */
+        .footer {
+            background: var(--gradient-navy);
+            color: white;
+            text-align: center;
+            padding: 60px 2rem;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hours {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(254, 252, 248, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 0;
+                padding: 1.5rem 0;
+                border-top: 1px solid var(--border-light);
+                box-shadow: 0 8px 32px var(--shadow-medium);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-menu a {
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: left;
+                border-radius: 0;
+                font-size: 1rem;
+            }
+            
+            .hero {
+                padding: 100px 1.5rem 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+            
+            .main-content {
+                padding: 60px 1.5rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-bottom: 60px;
+            }
+            
+            .menu-section {
+                padding: 2rem;
+                border-radius: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.625rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .section-divider {
+                margin: 60px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-wrapper {
+                padding: 0 1rem;
+            }
+            
+            .hero {
+                padding: 80px 1rem 40px;
+            }
+            
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            
+            .main-content {
+                padding: 40px 1rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .menu-section {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+                padding: 1rem 0;
+            }
+            
+            .item-info {
+                padding-right: 0;
+            }
+            
+            .item-price {
+                align-self: flex-end;
+                font-size: 1rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .nav-container,
+            .hero-clock,
+            .section-divider {
+                display: none;
+            }
+            
+            .hero {
+                margin-top: 0;
+                padding: 2rem;
+                background: white;
+                color: black;
+            }
+            
+            .menu-section {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                break-inside: avoid;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .hero-clock {
+                animation: none;
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --shadow-light: rgba(0, 0, 0, 0.3);
+                --shadow-medium: rgba(0, 0, 0, 0.4);
+                --border-light: #999;
+            }
         }
     </style>
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+        
+        function closeMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.remove('active');
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (navMenu && menuToggle && 
+                !navMenu.contains(event.target) && 
+                !menuToggle.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    closeMenu();
+                });
+            });
+        });
+        
+        // Loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
 </head>
 <body>
-    <div class="overlay">
-        <header>
+    <!-- Navigation -->
+    <nav class="nav-container" role="navigation" aria-label="Menu principal">
+        <div class="nav-wrapper">
+            <div class="nav-header">
+                <a href="#home" class="logo" aria-label="Big Ben Café - Accueil">Big Ben Café</a>
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+                <ul class="nav-menu" id="navMenu" role="menubar">
+                    <li role="none"><a href="#pasta" onclick="closeMenu()" role="menuitem">Pasta & Risotto</a></li>
+                    <li role="none"><a href="#viande-blanche" onclick="closeMenu()" role="menuitem">Viande Blanche</a></li>
+                    <li role="none"><a href="#fruits-mer" onclick="closeMenu()" role="menuitem">Fruits de Mer</a></li>
+                    <li role="none"><a href="#pizza" onclick="closeMenu()" role="menuitem">Pizza</a></li>
+                    <li role="none"><a href="#omelette" onclick="closeMenu()" role="menuitem">Omelettes & Salades</a></li>
+                    <li role="none"><a href="#boeuf" onclick="closeMenu()" role="menuitem">Plats à Bœuf</a></li>
+                    <li role="none"><a href="#agneau" onclick="closeMenu()" role="menuitem">Agneau</a></li>
+                    <li role="none"><a href="#partager" onclick="closeMenu()" role="menuitem">À Partager</a></li>
+                    <li role="none"><a href="#petit-dejeuner" onclick="closeMenu()" role="menuitem">Petit Déjeuner</a></li>
+                    <li role="none"><a href="#boissons" onclick="closeMenu()" role="menuitem">Boissons</a></li>
+                    <li role="none"><a href="#desserts" onclick="closeMenu()" role="menuitem">Desserts</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-clock" role="img" aria-label="Horloge">🕰️</div>
             <h1>Big Ben Café</h1>
-            <p class="subtitle">Menu Complet</p>
-            <div class="big-ben-icon"></div>
-        </header>
-        
-        <div class="menu-container">
-            <!-- Section 1: Pâtes & Risotto -->
-            <section class="menu-section">
-                <h2 class="section-title">PASTA & RISOTTO</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Fruit Pasta</span>
-                    <span class="item-price">18.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Spaghetti Daurade</span>
-                    <span class="item-price">19.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Penne Thon et Fromage Grevé</span>
-                    <span class="item-price">21.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pasta Puntanesca</span>
-                    <span class="item-price">24.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Galama (Pasta)</span>
-                    <span class="item-price">24.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Penne Poulet Champignon Crevette</span>
-                    <span class="item-price">24.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Spaghetti Bolognaise Daurade</span>
-                    <span class="item-price">25.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Penne Poulet Panée Pesto</span>
-                    <span class="item-price">27.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Tagliatelles + Fromage Filet</span>
-                    <span class="item-price">28.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pasta Poulet Sauce Oisée Grevé</span>
-                    <span class="item-price">29.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Penne Grevette, Pistache et Burrata</span>
-                    <span class="item-price">31.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tagliatelles</span>
-                    <span class="item-price">33.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Pasta Fruits de Mer</span>
-                    <span class="item-price">33.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Lasagne Viande Hachée</span>
-                    <span class="item-price">27.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Risotto au Poulet Champignon</span>
-                    <span class="item-price">29.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Risotto au Bœuf</span>
-                    <span class="item-price">34.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Paella (for 2 people)</span>
-                    <span class="item-price">48.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 2: Viande Blanche -->
-            <section class="menu-section">
-                <h2 class="section-title">VIANDE BLANCHE</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Escalope Grillée</span>
-                    <span class="item-price">16.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cuisses de Poulet Croustillantes</span>
-                    <span class="item-price">17.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Escalope Panée Sauce Fromage</span>
-                    <span class="item-price">19.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cordon Bleu Sauce Fromage Jambon</span>
-                    <span class="item-price">22.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Poitrine de Poulet Sauce au Champignon</span>
-                    <span class="item-price">29.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Poulet à la T4 Frito Toscana</span>
-                    <span class="item-price">32.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Mixte Escalope Big</span>
-                    <span class="item-price">39.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 3: Fruits de Mer -->
-            <section class="menu-section">
-                <h2 class="section-title">FRUITS DE MER</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Daurade</span>
-                    <span class="item-price">26.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Loup</span>
-                    <span class="item-price">28.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Grevette Sautées Sauce à l'Ail</span>
-                    <span class="item-price">32.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Calamars Sautés Sauce à l'Ail</span>
-                    <span class="item-price">33.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Grevette Panée</span>
-                    <span class="item-price">33.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Daurade Farcie</span>
-                    <span class="item-price">37.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Loup Farcie</span>
-                    <span class="item-price">38.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Filet de Daurade Sauce Champignon</span>
-                    <span class="item-price">39.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Crevette/Grevette Tempura (8 pièces)</span>
-                    <span class="item-price">48.000</span>
-                </div>
-            </section>
+            <p class="subtitle">Menu Digital - Saveurs Authentiques</p>
         </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content"><main>
+        <div class="menu-grid">
+            <!-- Section PASTA -->
+    <section id="pasta" class="menu-section">
+    <h2 class="section-title">PASTA</h2>
+
+    <div class="menu-item"><div class="item-info"><div class="item-name">Spaghetti Escalope</div></div><div class="item-price">18.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Penne Thon et Fromage Gruyère</div></div><div class="item-price">19.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Pasta Puttanesca</div></div><div class="item-price">21.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Penne Poulet Champignon</div></div><div class="item-price">24.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Spaghetti Bolognaise</div></div><div class="item-price">25.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Penne Poulet Panée Pesto</div></div><div class="item-price">25.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Tagliatelles 4 Fromage Filet</div></div><div class="item-price">27.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Pasta Poulet Sauce Rosée</div></div><div class="item-price">28.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Penne Crevette</div></div><div class="item-price">29.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Tagliatelles Pistache et Burrata</div></div><div class="item-price">31.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Pasta Fruits de Mer</div></div><div class="item-price">33.000</div></div>
+    </section>
+
+    <!-- Section VIANDE BLANCHE -->
+    <section id="viande-blanche" class="menu-section">
+    <h2 class="section-title">VIANDE BLANCHE</h2>
+
+    <div class="menu-item"><div class="item-info"><div class="item-name">Escalope Grillée</div></div><div class="item-price">16.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Cuisses de Poulet Croustillantes</div></div><div class="item-price">17.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Escalope Panée Sauce Fromage</div></div><div class="item-price">19.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Cordon Bleu Sauce Fromage</div></div><div class="item-price">22.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Poitrine de Poulet Sauce aux Champignons</div></div><div class="item-price">29.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Poulet à la Toscana</div></div><div class="item-price">32.000</div></div>
+    <div class="menu-item"><div class="item-info"><div class="item-name">Mixte Escalope</div></div><div class="item-price">39.000</div></div>
+    </section>
+
+
+    <!-- Section 3: fruit-mer -->
+     <section id="fruits-mer" class="menu-section">
+      <h2 class="section-title">FRUITS DE MER</h2>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Daurade</div></div><div class="item-price">26.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Loup</div></div><div class="item-price">28.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Grevette Sautées Sauce à l'Ail</div></div><div class="item-price">32.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Calamars Sautés Sauce à l'Ail</div></div><div class="item-price">33.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Grevette Panée</div></div><div class="item-price">33.000</div></div>
+      <div class="menu-item special-item"><div class="item-info"><div class="item-name">Daurade Farcie</div></div><div class="item-price">37.000</div></div>
+      <div class="menu-item special-item"><div class="item-info"><div class="item-name">Loup Farcie</div></div><div class="item-price">38.000</div></div>
+      <div class="menu-item special-item"><div class="item-info"><div class="item-name">Filet Daurade Sauce Champignon</div></div><div class="item-price">39.000</div></div>
+      <div class="menu-item special-item"><div class="item-info"><div class="item-name">Grevette Tempura (8 pièces)</div></div><div class="item-price">48.000</div></div>
+    </section>
+
+    <!-- Section 4: Omelette & Salades -->
+    <section id="omelette" class="menu-section">
+      <h2 class="section-title">OMELETTE & SALADES</h2>
+      <h3 class="section-subtitle">OMELETTES</h3>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Omelette Jambon</div></div><div class="item-price">9.800</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Omelette Thon</div></div><div class="item-price">10.800</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Omelette 4 fromage</div></div><div class="item-price">13.200</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Omelette Big ben</div></div><div class="item-price">15.000</div></div>
+
+      <h3 class="section-subtitle">SALADES</h3>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Salade Cesar</div></div><div class="item-price">15.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Salade Niçoise</div></div><div class="item-price">25.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Salade Burrata </div></div><div class="item-price">29.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Salade Camembert</div></div><div class="item-price">29.000</div></div>
+      
+      <h3 class="section-subtitle">OJJA</h3>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Ojja escalope</div></div><div class="item-price">18.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Ojja fruit de mer</div></div><div class="item-price">27.000</div></div>
         
-        <div class="section-divider">
-            <span class="divider-icon">🕰️</span>
-        </div>
-        
-        <div class="menu-container">
-            <!-- Section 4: Omelette & Salades -->
-            <section class="menu-section">
-                <h2 class="section-title">OMELETTE & SALADES</h2>
-                
-                <h3 class="section-subtitle">OMELETTES</h3>
-                <div class="menu-item">
-                    <span class="item-name">Omelette Jambon</span>
-                    <span class="item-price">18.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Omelette Fruits de Mer</span>
-                    <span class="item-price">27.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Omelette Thon</span>
-                    <span class="item-price">29.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">SALADES</h3>
-                <div class="menu-item">
-                    <span class="item-name">Salade César</span>
-                    <span class="item-price">15.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Salade Niçoise</span>
-                    <span class="item-price">25.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Salade Burrata 4 Fromages</span>
-                    <span class="item-price">29.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Salade Camembert</span>
-                    <span class="item-price">29.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Big Laben</span>
-                    <span class="item-price">15.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 5: Plats à Boeuf -->
-            <section class="menu-section">
-                <h2 class="section-title">PLATS À BOEUF</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Plat Champignons</span>
-                    <span class="item-price">32.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Émincé de Bœuf Crème Sauce aux Légumes</span>
-                    <span class="item-price">34.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Filet de Bœuf Grillé avec Fines Herbes</span>
-                    <span class="item-price">34.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Filet de Bœuf Sauce aux Champignons</span>
-                    <span class="item-price">36.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Gâtele de Bœuf</span>
-                    <span class="item-price">48.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 6: Agneau -->
-            <section class="menu-section">
-                <h2 class="section-title">AGNEAU</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Foie d'Agneau</span>
-                    <span class="item-price">33.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Gigot d'Agneau</span>
-                    <span class="item-price">34.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Bonbons d'Agneau</span>
-                    <span class="item-price">38.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Poêle à Viande et Foie</span>
-                    <span class="item-price">38.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Grillade Mixte</span>
-                    <span class="item-price">42.000</span>
-                </div>
-            </section>
-        </div>
-        
-        <div class="section-divider">
-            <span class="divider-icon">🕰️</span>
-        </div>
-        
-        <div class="menu-container">
-            <!-- Section 7: Pizza -->
-            <section class="menu-section">
-                <h2 class="section-title">PIZZA</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Margherita (sauce tomate, mozzarella)</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Funghi (sauce tomate, mozzarella, champignons)</span>
-                    <span class="item-price">16.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Pepperoni (sauce tomate, mozzarella, pepperoni)</span>
-                    <span class="item-price">17.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Thon (sauce tomate, mozzarella, thon)</span>
-                    <span class="item-price">18.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Jambon (sauce tomate, mozzarella, jambon)</span>
-                    <span class="item-price">18.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Berbere (sauce tomate, mozzarella, œuf)</span>
-                    <span class="item-price">18.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Mexicaine (sauce tomate, mozzarella, escalope)</span>
-                    <span class="item-price">19.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza 4 Saisons</span>
-                    <span class="item-price">19.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Chèvre Miel (crème fraîche, fromage de chèvre, miel)</span>
-                    <span class="item-price">19.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Maremonti (sauce tomate, mozzarella, thon)</span>
-                    <span class="item-price">19.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza 5 Fromages (sauce rose, gruyère, parmesan, mozzarella, etc.)</span>
-                    <span class="item-price">20.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Pizza (sauce rose, mozzarella, charcuterie, gruyère)</span>
-                    <span class="item-price">20.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pizza Chèvre & Feta</span>
-                    <span class="item-price">21.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Pizza Symphonie (sauce rose, mozzarella, chèvre, thon, etc.)</span>
-                    <span class="item-price">23.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Pizza XL</span>
-                    <span class="item-price">32.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 8: Plats à Partager -->
-            <section class="menu-section">
-                <h2 class="section-title">PLATS À PARTAGER</h2>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Tomahawk (1kg)</span>
-                    <span class="item-price">105.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Epaule (2kg)</span>
-                    <span class="item-price">148.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Symphonie Fruits de Mer</span>
-                    <span class="item-price">178.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">BIG BEN</span>
-                    <span class="item-price">188.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 9: Petit Déjeuner -->
-            <section class="menu-section">
-                <h2 class="section-title">PETIT DÉJEUNER</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">EXPRESS (1 person)</span>
-                    <span class="item-price">12.000</span>
-                    <div class="item-description">Coffee, 1/2 b, Eau</div>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">THE BEST (2 persons)</span>
-                    <span class="item-price">42.000</span>
-                    <div class="item-description">2 cafés, 2 jus, boule au chocolat, 2 crêpes, omelette, 2 tiramisu, jwajem, ramequins (chocolate, fruits secs, café), beurre, vanille, camembert, jambon, thé, brochette escalope, escalope panée, cordon bleu, ojja, salade césar, harissa, sauce à l'ail, pain</div>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">FANTASTIC (2 persons)</span>
-                    <span class="item-price">59.000</span>
-                    <div class="item-description">2 cafés, 2 jus, crêpe salée, pancake, boule au chocolat, crêpe sucrée, san sebastian, tiramisu, jwajem, ramequins, omelette, fromage, jambon, brochettes, escalopes, cordon bleu, ojja, salade césar, harissa, sauce à l'ail, pain</div>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">BIG BEN (Familial)</span>
-                    <span class="item-price">83.000</span>
-                    <div class="item-description">4 cafés, jus, pancake, boule au chocolat, crêpe sucrée, san sebastian, tiramisu, jwajem, ramequins, crêpe salée, omelette, fromage, jambon, brochettes, escalopes, cordon bleu, ojja, salade césar, harissa, sauce à l'ail, pain</div>
-                </div>
-            </section>
-        </div>
-        
-        <div class="section-divider">
-            <span class="divider-icon">🕰️</span>
-        </div>
-        
-        <div class="menu-container">
-            <!-- Section 10: Café & Boissons -->
-            <section class="menu-section">
-                <h2 class="section-title">CAFÉ & BOISSONS</h2>
-                
-                <h3 class="section-subtitle">Coffee & Hot Drinks</h3>
-                <div class="menu-item">
-                    <span class="item-name">Café</span>
-                    <span class="item-price">3.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Express</span>
-                    <span class="item-price">3.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cappuccino</span>
-                    <span class="item-price">4.200</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Directe</span>
-                    <span class="item-price">4.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Nescafé</span>
-                    <span class="item-price">4.200</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat au Lait</span>
-                    <span class="item-price">5.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Bavazza</span>
-                    <span class="item-price">6.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Nespresso</span>
-                    <span class="item-price">6.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Café Turque</span>
-                    <span class="item-price">6.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Café Glacé (choix: vanille, caramel, noisette, pistache)</span>
-                    <span class="item-price">6.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Eau 1L</span>
-                    <span class="item-price">3.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Eau Gazeuse</span>
-                    <span class="item-price">4.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Thé</span>
-                    <span class="item-price">3.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Thé Infusion</span>
-                    <span class="item-price">4.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Thé Amande</span>
-                    <span class="item-price">6.500</span>
-                </div>
-            </section>
-            
-            <!-- Section 11: Jus & Cocktails -->
-            <section class="menu-section">
-                <h2 class="section-title">JUS & COCKTAILS</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Orange</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Citron</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Ananas</span>
-                    <span class="item-price">11.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Manga</span>
-                    <span class="item-price">11.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Banane</span>
-                    <span class="item-price">11.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Fraise Banane</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Kiwi Banane</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Kiwi</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Fraise</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jus Fromage (likely Framboise)</span>
-                    <span class="item-price">15.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Banane Datte Big Ben</span>
-                    <span class="item-price">18.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">SMOOTHIES</h3>
-                <div class="menu-item">
-                    <span class="item-name">Smoothie Fraise Rouge</span>
-                    <span class="item-price">11.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Smoothie Fraise aux Choix</span>
-                    <span class="item-price">12.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Smoothie Fruits de Mer (likely Fruits Mélangés)</span>
-                    <span class="item-price">12.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Smoothie Fruits Exotiques</span>
-                    <span class="item-price">13.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Smoothie 3 Fruits</span>
-                    <span class="item-price">15.600</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Smoothie Big Ben</span>
-                    <span class="item-price">16.600</span>
-                </div>
-                
-                <h3 class="section-subtitle">MOJITOS</h3>
-                <div class="menu-item">
-                    <span class="item-name">Vert Mojito</span>
-                    <span class="item-price">11.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Bleu Mojito</span>
-                    <span class="item-price">12.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Red Mojito</span>
-                    <span class="item-price">12.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Mojito Fruits</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Mojito Big Ben</span>
-                    <span class="item-price">15.500</span>
-                </div>
-            </section>
-            
-            <!-- Section 12: Frappuccino & Chocolat Chaud -->
-            <section class="menu-section">
-                <h2 class="section-title">FRAPPUCCINO & CHOCOLAT CHAUD</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Frappuccino Chocolat</span>
-                    <span class="item-price">12.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat Chaud</span>
-                    <span class="item-price">12.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Oreo</span>
-                    <span class="item-price">13.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat Nutella</span>
-                    <span class="item-price">12.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Speculoos</span>
-                    <span class="item-price">13.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat Oreo</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Nutella</span>
-                    <span class="item-price">13.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat Spéculoos</span>
-                    <span class="item-price">13.800</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Chocolat BIG BEN</span>
-                    <span class="item-price">16.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Snikers</span>
-                    <span class="item-price">13.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Bio Ben</span>
-                    <span class="item-price">16.000</span>
-                </div>
-            </section>
-        </div>
-        
-        <div class="section-divider">
-            <span class="divider-icon">🕰️</span>
-        </div>
-        
-        <div class="menu-container">
-            <!-- Section 13: Milkshakes -->
-            <section class="menu-section">
-                <h2 class="section-title">MILKSHAKES</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Milkshake Chocolat</span>
-                    <span class="item-price">12.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Milkshake Oreo</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Milkshake Nutella</span>
-                    <span class="item-price">14.500</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Milkshake BIG BEN</span>
-                    <span class="item-price">16.500</span>
-                </div>
-            </section>
-            
-            <!-- Section 14: Glaces -->
-            <section class="menu-section">
-                <h2 class="section-title">GLACES</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">3 Boules</span>
-                    <span class="item-price">5.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">4 Boules</span>
-                    <span class="item-price">6.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">6 Boules</span>
-                    <span class="item-price">8.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Biben</span>
-                    <span class="item-price">12.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat Glacé</span>
-                    <span class="item-price">9.200</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Nutella</span>
-                    <span class="item-price">11.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Fruit Sec</span>
-                    <span class="item-price">13.600</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Chocolat Glacé BIG BEN</span>
-                    <span class="item-price">15.800</span>
-                </div>
-            </section>
-            
-            <!-- Section 15: Crêpes & Pancakes -->
-            <section class="menu-section">
-                <h2 class="section-title">CRÊPES & PANCAKES</h2>
-                
-                <h3 class="section-subtitle">Crêpes Sucrées (Sweet)</h3>
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Chocolat</span>
-                    <span class="item-price">8.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Nutella</span>
-                    <span class="item-price">12.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe 4 Fromages</span>
-                    <span class="item-price">10.300</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Escalope Morlette</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe BIG BEN</span>
-                    <span class="item-price">13.200</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe 3 Chocolat, Nutella, Fruit</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Mexicaine</span>
-                    <span class="item-price">14.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Thon Morlette Fruit</span>
-                    <span class="item-price">14.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Fourrée</span>
-                    <span class="item-price">16.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">Crêpes Salées (Savory)</h3>
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Jambon</span>
-                    <span class="item-price">8.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Thon</span>
-                    <span class="item-price">9.300</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Escalope Panée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Crêpe Escalope Grillée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <h3 class="section-subtitle">Waffles & Pancakes</h3>
-                <div class="menu-item">
-                    <span class="item-name">Waffles (10 Boules)</span>
-                    <span class="item-price">9.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Waffles (12 Boules)</span>
-                    <span class="item-price">11.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Waffles (18 Boules)</span>
-                    <span class="item-price">15.600</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Waffles (24 Boules)</span>
-                    <span class="item-price">18.600</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Waffles BIG BEN</span>
-                    <span class="item-price">19.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pancake Chocolat</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pancake 2 Chocolat, Nutella, Morlette</span>
-                    <span class="item-price">12.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pancake 3 Chocolat</span>
-                    <span class="item-price">12.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pancake Nutella Fruits Sec</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pancake Morlette Fruits Sec</span>
-                    <span class="item-price">14.500</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Pancake BIG BEN</span>
-                    <span class="item-price">18.000</span>
-                </div>
-            </section>
-        </div>
-        
-        <div class="section-divider">
-            <span class="divider-icon">🕰️</span>
-        </div>
-        
-        <div class="menu-container">
-            <!-- Section 16: San Sebastian -->
-            <section class="menu-section">
-                <h2 class="section-title">SAN SEBASTIAN</h2>
-                
-                <div class="menu-item">
-                    <span class="item-name">Chocolat (Fruit Sec)</span>
-                    <span class="item-price">11.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Nutella (Fruit Sec)</span>
-                    <span class="item-price">13.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Speculoos (Fruit Sec)</span>
-                    <span class="item-price">14.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Snickers (Fruit Sec)</span>
-                    <span class="item-price">14.900</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Ferrero Rocher (Fruit Sec)</span>
-                    <span class="item-price">15.900</span>
-                </div>
-            </section>
-            
-            <!-- Section 17: Baguettes & Sandwiches -->
-            <section class="menu-section">
-                <h2 class="section-title">BAGUETTES & SANDWICHES</h2>
-                
-                <h3 class="section-subtitle">Baguettes</h3>
-                <div class="menu-item">
-                    <span class="item-name">Baguette Jambon</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Baguette Thon</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Baguette Escalope Panée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Baguette Escalope Grillée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Baguette Thon</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Baguette Farcie Xb</span>
-                    <span class="item-price">28.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">Panini (PANNOZZO)</h3>
-                <div class="menu-item">
-                    <span class="item-name">Panino Jambon</span>
-                    <span class="item-price">11.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Panino Escalope Panée</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Panino Escalope Grillée</span>
-                    <span class="item-price">12.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Panino Thon</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Panino Gordon Bleu</span>
-                    <span class="item-price">14.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Panino Big Ben</span>
-                    <span class="item-price">16.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">Cornet</h3>
-                <div class="menu-item">
-                    <span class="item-name">Cornet Jambon</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cornet Escalope Panée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cornet Escalope Grillée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cornet Thon</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Cornet Big Ben</span>
-                    <span class="item-price">16.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">Ciabatta</h3>
-                <div class="menu-item">
-                    <span class="item-name">Ciabatta Jambon</span>
-                    <span class="item-price">9.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Ciabatta Thon</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Ciabatta Escalope Panée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Ciabatta Escalope Grillée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <h3 class="section-subtitle">Calzone</h3>
-                <div class="menu-item">
-                    <span class="item-name">Calzone Jambon</span>
-                    <span class="item-price">8.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Calzone Escalope Panée</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Calzone Thon</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">Tacos</h3>
-                <div class="menu-item">
-                    <span class="item-name">Tacos Jambon</span>
-                    <span class="item-price">8.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tacos Escalope Grillée</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tacos Escalope Panée</span>
-                    <span class="item-price">10.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tacos Thon</span>
-                    <span class="item-price">10.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tacos Chawarma</span>
-                    <span class="item-price">10.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tacos Américain</span>
-                    <span class="item-price">11.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">Sandwich</h3>
-                <div class="menu-item">
-                    <span class="item-name">Sandwich Jambon</span>
-                    <span class="item-price">8.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Sandwich Thon</span>
-                    <span class="item-price">9.300</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Sandwich Escalope</span>
-                    <span class="item-price">9.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Sandwich Gordon Bleu</span>
-                    <span class="item-price">14.000</span>
-                </div>
-            </section>
-            
-            <!-- Section 18: Desserts & Suppléments -->
-            <section class="menu-section">
-                <h2 class="section-title">DESSERTS & SUPPLÉMENTS</h2>
-                
-                <h3 class="section-subtitle">GATEAUX</h3>
-                <div class="menu-item">
-                    <span class="item-name">Gâteau</span>
-                    <span class="item-price">7.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Tiramisu</span>
-                    <span class="item-price">8.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Cheesecake</span>
-                    <span class="item-price">10.500</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Thé Big Ben</span>
-                    <span class="item-price">42.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Baklawa Fruit Sec</span>
-                    <span class="item-price">12.800</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Pain</span>
-                    <span class="item-price">1.000</span>
-                </div>
-                
-                <h3 class="section-subtitle">JWAJEM (ALMOND PASTRY)</h3>
-                <div class="menu-item">
-                    <span class="item-name">Jwajem 1/2</span>
-                    <span class="item-price">9.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Jwajem</span>
-                    <span class="item-price">13.000</span>
-                </div>
-                
-                <div class="menu-item special-item">
-                    <span class="item-name">Jwajem BIG BEN</span>
-                    <span class="item-price">19.500</span>
-                </div>
-                
-                <h3 class="section-subtitle">SUPPLÉMENTS</h3>
-                <div class="menu-item">
-                    <span class="item-name">Supplément Frites</span>
-                    <span class="item-price">5.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Supplément Fromage</span>
-                    <span class="item-price">5.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Supplément Chorizo</span>
-                    <span class="item-price">3.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Supplément Champignons</span>
-                    <span class="item-price">4.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Supplément Thon</span>
-                    <span class="item-price">5.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Supplément Jambon</span>
-                    <span class="item-price">8.000</span>
-                </div>
-                
-                <div class="menu-item">
-                    <span class="item-name">Supplément Oeuf</span>
-                    <span class="item-price">2.000</span>
-                </div>
-            </section>
-        </div>
-        
-        <footer>
-            <p><span class="footer-icon">🕰️</span> Big Ben Café <span class="footer-icon">🕰️</span></p>
-            <p>Ouvert tous les jours de 8h00 à 23h00</p>
-        </footer>
-    </div>
+    </section>
+
+    <!-- Section 5: Plats à Bœuf -->
+    <section id="boeuf" class="menu-section">
+      <h2 class="section-title">PLATS À BOEUF</h2>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Émincé de Bœuf Crème Sauce aux Légumes</div></div><div class="item-price">32.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Filet de Bœuf Grillé avec Fines Herbes</div></div><div class="item-price">34.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Filet de Bœuf avec Sauce aux Champignons</div></div><div class="item-price">36.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Cotelette de Bœuf</div></div><div class="item-price">36.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Cote a l'osse de pizza</div></div><div class="item-price">48.000</div></div>
+    </section>
+
+    <!-- Section 6: Agneau -->
+    <section id="agneau" class="menu-section">
+      <h2 class="section-title">AGNEAU</h2>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Foie d'Agneau</div></div><div class="item-price">33.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Cotlet d'Agneau</div></div><div class="item-price">34.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Bonbons d'Agneau</div></div><div class="item-price">38.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Poele à Viande et Foie</div></div><div class="item-price">38.000</div></div>
+      <div class="menu-item special-item"><div class="item-info"><div class="item-name">Grillade Mixte</div></div><div class="item-price">42.000</div></div>
+    </section>
+
+    <!-- Section 7: Pizza -->
+    <section id="pizza" class="menu-section">
+      <h2 class="section-title">PIZZA</h2>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Margherita (sauce tomate, mozzarella)</div></div><div class="item-price">13.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Funghi (sauce tomate, mozzarella, champignons)</div></div><div class="item-price">16.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Pepperoni (sauce tomate, mozzarella, pepperoni)</div></div><div class="item-price">17.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Thon (sauce tomate, mozzarella, thon)</div></div><div class="item-price">18.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza 3 Jambon (sauce tomate, mozzarella, jambon, pepperoni, salson)</div></div><div class="item-price">18.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Berbère (sauce tomate, mozzarella, œuf, merguez)</div></div><div class="item-price">18.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Mexicaine (sauce tomate, mozzarella, escalope)</div></div><div class="item-price">18.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza 4 Saisons (sauce, mozzarella, jambon, pepperoni, thon)</div></div><div class="item-price">19.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Chèvre Miel (crème fraîche, fromage de chevrette)</div></div><div class="item-price">19.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Mare Monti (sauce tomate, mozzarella, thon, champignon)</div></div><div class="item-price">19.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza 5 Fromages (sauce rose, gruyère, parnes gen, mozzarella, rock fort)</div></div><div class="item-price">20.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Mizza Pizza (sauce rose, mozzarella, champignon, , escalope,gruyère epinard)</div></div><div class="item-price">20.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Chevrette (sauce tomate, mozzarella, chevrette)</div></div><div class="item-price">21.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Symphonie (sauce rose, mozzarella, chevrette, gruyère, champignon)</div></div><div class="item-price">23.000</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Pizza Chevrette XL</div></div><div class="item-price">32.000</div></div>    
+    </section>
+
+<!-- Section 8: Plats à Partager -->
+<section id="plats-partager" class="menu-section">
+  <h2 class="section-title">PLATS À PARTAGER</h2>
+  
+  <div class="menu-item"><div class="item-info"><div class="item-name">Tomhawk 1kg</div></div><div class="item-price">105.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Entam & 2 kg</div></div><div class="item-price">145.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Symphonie fruit de mer</div></div><div class="item-price">176.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">188.000</div></div>
+  
+  <h3 class="section-subtitle">SUPPLÉMENT</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Supplément frites</div></div><div class="item-price">5.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Supplément fromage</div></div><div class="item-price">5.000</div></div>
+  
+  <h3 class="section-subtitle">PLATS PRINCIPAUX</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Lasagne viande hachée</div></div><div class="item-price">27.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Risotto au poulet champignon</div></div><div class="item-price">29.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Risotto au boeuf</div></div><div class="item-price">34.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Paella (2 personnes)</div></div><div class="item-price">48.000</div></div>
+</section>
+
+<!-- Section 9: Petit Déjeuner -->
+<section id="petit-dejeuner" class="menu-section">
+  <h2 class="section-title">PETIT DÉJEUNER</h2>
+  <div class="menu-item"><div class="item-info"><div class="item-name">EXPRESS (1 personne)</div><div class="item-description">1 Café, 1 jus,crêpe sucrée, 1/2L Eau</div></div><div class="item-price">12.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">THE BEST (2 personnes)</div><div class="item-description">2 cafés, 2 jus, Boule au chocolat, 2 crêpes au choix, omelette, 2 teramisu, 2 jwajem, ramequin beurre, ramequin chamla, ramequin chocolat, ramequin fruit sec</div></div><div class="item-price">42.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">FANTASTIC (2 personnes)</div><div class="item-description">2 cafés, 2 jus, crêpe salée, pancake, boule au chocolat, crêpe sucrée, san sebastian, teramisu, jwajem, ramequins chocolat, ramequin fruit sec, omelette, fromage, jambon, brochette escalope, Escaloppe pannee, cordon bleu, Ojja, salade césar, harissa, sauce à l'ail, pain</div></div><div class="item-price">59.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN (Familial)</div><div class="item-description">4 cafés, jus, pancake, boule au chocolat, crêpe sucrée, san sebastian, teramisu, jwajem, ramequin chocolat, ramequin fruit sec, crêpe salée, omelette, fromage, jambon, brochette escalope, Escaloppe pannee, cordon bleu, Ojja, salade césar, harissa, sauce à l'ail, pain</div></div><div class="item-price">83.000</div></div>
+</section>
+
+<!-- Section 10: Café & Boissons -->
+<section id="cafe-boissons" class="menu-section">
+  <h2 class="section-title">CAFÉ & BOISSONS</h2>
+
+  <h3 class="section-subtitle">CAFÉ</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Express</div></div><div class="item-price">3.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Cappucin</div></div><div class="item-price">3.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Directe</div></div><div class="item-price">4.200</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Nescafé</div></div><div class="item-price">4.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat au lait</div></div><div class="item-price">4.200</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Cappuccino</div></div><div class="item-price">5.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Bavazza</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Nespresso</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Café Turque</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Café Glacé au choix (vanille, caramel, noisette, pistache)</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Café chaud aux choix (vanille, caramel, noisette, pistache)</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Café glacé morjene</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Café chaud morjene</div></div><div class="item-price">9.500</div></div>
+
+  <h3 class="section-subtitle">BOISSONS</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Eau 1 L</div></div><div class="item-price">3.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Canette</div></div><div class="item-price">4.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Eau gazeuse</div></div><div class="item-price">4.800</div></div>
+
+  <h3 class="section-subtitle">THÉ</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thé</div></div><div class="item-price">3.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thé Infusion</div></div><div class="item-price">4.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thé amande</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thé big ben baklawa fruit sec</div></div><div class="item-price">12.800</div></div>
+
+  <h3 class="section-subtitle">GATEAUX</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gâteau</div></div><div class="item-price">7.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Tiramisu</div></div><div class="item-price">8.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Cheesecake</div></div><div class="item-price">10.500</div></div>
+</section>
+
+
+<!-- Section 11: Jus & Cocktails -->
+<section id="jus-cocktails" class="menu-section">
+  <h2 class="section-title">JUS & COCKTAILS</h2>
+  <h3 class="section-subtitle">JUS</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Orange</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Citron</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Fraise</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Kiwi</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Ananas</div></div><div class="item-price">11.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Manga</div></div><div class="item-price">11.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Banane</div></div><div class="item-price">11.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Framboise</div></div><div class="item-price">15.000</div></div>
+
+  <h3 class="section-subtitle">COCKTAILS</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Fraise Banane</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Kiwi Banane</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Banane Datte Big Ben</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jus Big Ben</div></div><div class="item-price">18.000</div></div>
+
+  <h3 class="section-subtitle">SMOOTHIES</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Smoothie Fraise Rouge</div></div><div class="item-price">11.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Smoothie Fraise aux Choix</div></div><div class="item-price">12.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Smoothie Fruits metter</div></div><div class="item-price">12.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Smoothie Fruits Exotiques</div></div><div class="item-price">13.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Smoothie 3 Fruits</div></div><div class="item-price">15.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Smoothie Big Ben</div></div><div class="item-price">16.600</div></div>
+
+  <h3 class="section-subtitle">MOJITOS</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Vert Mojito</div></div><div class="item-price">11.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Bleu Mojito</div></div><div class="item-price">12.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Red Mojito</div></div><div class="item-price">12.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Mojito Fruit</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Mojito Big Ben</div></div><div class="item-price">15.500</div></div>
+  
+  <h3 class="section-subtitle">JWAJEM (ALMOND PASTRY)</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jwajem 1/2</div></div><div class="item-price">9.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jwajem</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item special-item"><div class="item-info"><div class="item-name">Jwajem BIG BEN</div></div><div class="item-price">19.500</div></div>
+
+</section>
+
+
+<!-- Section 12: Frappuccino & Chocolat Chaud -->
+<section id="beverages-desserts" class="menu-section">
+  <h2 class="section-title">BEVERAGES & DESSERTS</h2>
+  
+  <h3 class="section-subtitle">FRAPPUCCINO</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat</div></div><div class="item-price">12.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Oreo</div></div><div class="item-price">13.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Speculoos</div></div><div class="item-price">13.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Nutella</div></div><div class="item-price">13.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Snickers</div></div><div class="item-price">13.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">16.000</div></div>
+  
+  <h3 class="section-subtitle">CHOCOLAT CHAUD</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat Chaud</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat Nutella</div></div><div class="item-price">12.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat Oreo</div></div><div class="item-price">12.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat Spéculoos</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat BIG BEN</div></div><div class="item-price">16.000</div></div>
+  
+  <h3 class="section-subtitle">MILKSHAKE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat</div></div><div class="item-price">12.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Oreo</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Nutella</div></div><div class="item-price">14.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">16.500</div></div>
+  
+  <h3 class="section-subtitle">CHOCOLAT GLACÉ</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat glacé</div></div><div class="item-price">9.200</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Nutella</div></div><div class="item-price">11.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Fruit sec</div></div><div class="item-price">13.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">15.800</div></div>
+  
+  <h3 class="section-subtitle">GLACE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">3 boules</div></div><div class="item-price">5.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">4 boules</div></div><div class="item-price">6.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">6 boules</div></div><div class="item-price">8.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">12.600</div></div>
+</section>
+
+
+<!-- Section 15: Crêpes & Pancakes -->
+<section id="crepes-pancakes" class="menu-section">
+  <h2 class="section-title">CRÊPES & PANCAKES</h2>
+
+<h3 class="section-subtitle">CRÊPE SUCRÉE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Chocolat</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Nutella</div></div><div class="item-price">12.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Morjene</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe 3 chocolat</div></div><div class="item-price">12.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Nutella fruit sec</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Morjene fruit sec</div></div><div class="item-price">14.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Big ben</div></div><div class="item-price">15.500</div></div>
+  
+  <h3 class="section-subtitle">CRÊPE SALÉE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Thon</div></div><div class="item-price">8.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Jambon</div></div><div class="item-price">9.300</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe 4 fromages</div></div><div class="item-price">10.300</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe BIG BEN</div></div><div class="item-price">13.200</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Mexicain</div></div><div class="item-price">14.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Fourrée</div></div><div class="item-price">16.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">crêpe Fourrée big ben</div></div><div class="item-price">23.000</div></div>
+  
+  <h3 class="section-subtitle">GAUFRE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre Chocolat</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre Nutella</div></div><div class="item-price">12.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre Morjene</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre 3 chocolat</div></div><div class="item-price">12.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre Nutella fruits sec</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre Morjen fruits sec</div></div><div class="item-price">14.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Gaufre BIG BEN</div></div><div class="item-price">15.500</div></div>
+  
+  <h3 class="section-subtitle">BOULE WAFFLE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">10 boules</div></div><div class="item-price">9.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">12 boules</div></div><div class="item-price">11.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">18 boules</div></div><div class="item-price">15.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">24 boules</div></div><div class="item-price">18.600</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">19.800</div></div>
+  
+  <h3 class="section-subtitle">PANCAKE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">12 boules</div></div><div class="item-price">8.800</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">18 boules</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">24 boules</div></div><div class="item-price">15.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">BIG BEN</div></div><div class="item-price">18.000</div></div>
+  
+  <h3 class="section-subtitle">SAN SEBASTIAN</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chocolat (fruit sec)</div></div><div class="item-price">11.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Nutella (fruit sec)</div></div><div class="item-price">13.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Spéculoos (fruit sec)</div></div><div class="item-price">14.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Snickers (fruit sec)</div></div><div class="item-price">14.900</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Ferrero rocher (fruit sec)</div></div><div class="item-price">15.900</div></div>
+</section>
+
+
+<!-- Section 17: Baguettes & Sandwiches -->
+<section id="baguettes-sandwiches" class="menu-section">
+  <h2 class="section-title">BAGUETTES & SANDWICHES</h2>
+
+  <h3 class="section-subtitle">BAGUETTE FARCIE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope Panée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope Grillée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item special-item"><div class="item-info"><div class="item-name">Baguette Farcie XL</div></div><div class="item-price">28.000</div></div>
+
+  <h3 class="section-subtitle">MAKLOUB</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope panée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope grillée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">10.000</div></div>
+
+  <h3 class="section-subtitle">PANOZZO</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">11.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope panée</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope grillée</div></div><div class="item-price">12.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">13.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Cordon bleu</div></div><div class="item-price">14.000</div></div>
+  <div class="menu-item special-item"><div class="item-info"><div class="item-name">Big ben</div></div><div class="item-price">16.000</div></div>
+
+  <h3 class="section-subtitle">CIABATTA</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">9.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope panée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope grillée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">11.000</div></div>
+
+  <h3 class="section-subtitle">CORNET</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">8.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope panée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope grillée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">10.000</div></div>
+
+  <h3 class="section-subtitle">CALZONE</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">8.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope panée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope grillée</div></div><div class="item-price">9.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Casa</div></div><div class="item-price">10.500</div></div>
+
+  <h3 class="section-subtitle">TACOS</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Jambon</div></div><div class="item-price">8.500</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope grillée</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Escalope panée</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Thon</div></div><div class="item-price">10.500</div></div>
+
+  <h3 class="section-subtitle">SANDWITCH</h3>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Chawarma</div></div><div class="item-price">10.000</div></div>
+  <div class="menu-item"><div class="item-info"><div class="item-name">Américain</div></div><div class="item-price">11.000</div></div>
+</section>
+
+</div>
+</main>
+
+<footer>
+    <p><span class="footer-icon">🕰️</span> Big Ben Café <span class="footer-icon">🕰️</span></p>
+    <p>Ouvert tous les jours de 8h00 à 23h00</p>
+</footer>
+</div>
+    
 </body>
 </html>
